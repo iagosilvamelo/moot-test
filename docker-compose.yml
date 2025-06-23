@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+    app:
+        container_name: ${APP_NAME}-app
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+        ports:
+            - "80:80"
+        volumes:
+            - .:/var/www/html
+        depends_on:
+            db:
+                condition: service_healthy
+        environment:
+            - APACHE_DOCUMENT_ROOT=/var/www/html/public
+
+    db:
+        container_name: ${APP_NAME}-db
+        image: mysql:8.0
+        restart: unless-stopped
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        volumes:
+            - db_data:/var/lib/mysql
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    adminer:
+        container_name: ${APP_NAME}-adminer
+        image: adminer
+        restart: unless-stopped
+        ports:
+            - "8080:8080"
+
+volumes:
+    db_data:
