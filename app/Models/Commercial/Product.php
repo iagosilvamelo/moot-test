@@ -36,4 +36,26 @@ class Product extends Model
     {
         return $this->belongsTo(Manufacturer::class);
     }
+
+    public function getInitialsAttribute(): string
+    {
+        $words = explode(' ', $this->name);
+        $initials = '';
+
+        foreach ($words as $word) {
+            if (!empty($word)) {
+                $initials .= strtoupper($word[0]);
+            }
+        }
+
+        return substr($initials, 0, 2);
+    }
+
+    public function getFormattedPriceAttribute(): string
+    {
+        $valueInBRL = $this->price / 100.0;
+        $formattedValue = number_format($valueInBRL, 2, ',', '.');
+
+        return 'R$ ' . $formattedValue;
+    }
 }
