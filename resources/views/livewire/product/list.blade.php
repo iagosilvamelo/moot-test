@@ -6,14 +6,11 @@
         @if($products->isEmpty())
             <p class="text-gray-600 dark:text-gray-400 text-center py-4">Nenhum produto encontrado com os filtros selecionados.</p>
         @else
-            <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 @foreach($products as $product)
-                    <li class="py-4 flex justify-between items-center text-gray-900 dark:text-white">
-                        <span class="font-medium">{{ $product->name }}</span>
-                        <span class="text-blue-600 dark:text-blue-400 font-bold">R$ {{ number_format($product->price, 2, ',', '.') }}</span>
-                    </li>
+                    <x-product.card :product="$product" />
                 @endforeach
-            </ul>
+            </div>
         @endif
     </div>
 </div>
