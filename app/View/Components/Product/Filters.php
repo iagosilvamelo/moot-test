@@ -11,11 +11,7 @@ class Filters extends Component
 {
     public function __construct(
         public Collection $categories,
-        public Collection $manufacturers,
-        public string $searchNameBinding,
-        public string $selectedCategoriesBinding,
-        public string $selectedManufacturersBinding,
-        public string $clearFiltersAction
+        public Collection $manufacturers
     ) {}
 
     public function render(): View|Closure|string
