@@ -35,12 +35,5 @@ services:
             timeout: 5s
             retries: 5
 
-    adminer:
-        container_name: ${APP_NAME}-adminer
-        image: adminer
-        restart: unless-stopped
-        ports:
-            - "8080:8080"
-
 volumes:
     db_data:
