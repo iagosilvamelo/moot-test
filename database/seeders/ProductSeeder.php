@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Models\Commercial\Product;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class ProductSeeder extends Seeder
 {
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        $this->call(UserTestSeeder::class);
-        $this->call(ProductSeeder::class);
+        Product::factory()->count(100)->create();
     }
 }
